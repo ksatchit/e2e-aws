@@ -6,7 +6,7 @@ set -x
 #################
 
 ## https://github.com/openebs/litmus/blob/master/apps/cassandra/functional/scale_replicas/test_vars.yml 
-test_name=$(${utils_path}/generate_test_name testcase=scale-app-replicas metadata=cstor)
+run_id="cstor";test_name=$(${utils_path}/generate_test_name testcase=scale-app-replicas metadata=${run_id})
 
 ###################
 ## DEPENDENCIES  ##
@@ -38,7 +38,7 @@ sed -i -e 's/app: cassandra-scaleup-litmus/app: cassandra-scaleup-cstor/g' \
 
 sed -i '/command:/i \
           - name: RUN_ID\
-            value: '"$run_metadata"'\
+            value: '"$run_id"'\
 ' run_test.yml
 
 

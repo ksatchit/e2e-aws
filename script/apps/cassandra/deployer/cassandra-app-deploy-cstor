@@ -6,8 +6,7 @@ set -x
 #################
 
 ## https://github.com/openebs/litmus/blob/master/apps/cassandra/deployers/test_vars.yml
-test_name=$(${utils_path}/generate_test_name testcase=cassandra-deployment metadata=cstor)
-
+run_id="cstor";test_name=$(${utils_path}/generate_test_name testcase=cassandra-deployment metadata=${run_id})
 
 ###################
 ## DEPENDENCIES  ##
@@ -36,11 +35,11 @@ EOF
 cp apps/cassandra/deployers/run_litmus_test.yml run_test.yml
 sed -i -e 's/app: cassandra-deployment-litmus/app: cassandra-deployment-cstor/g' \
 -e 's/value: openebs-standalone/value: openebs-cstor-sparse/g' \
--e 's/value: app-cass-ns/value: casandra-cstor/g' run_test.yml
+-e 's/value: app-cass-ns/value: cassandra-cstor/g' run_test.yml
 
 sed -i '/command:/i \
           - name: RUN_ID\
-            value: '"$run_metadata"'\
+            value: '"$run_id"'\
 ' run_test.yml
 
 #################

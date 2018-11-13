@@ -147,6 +147,12 @@ cassandra-cstor-run/load/check 1:2:
   script:
    - ./script/apps/cassandra/workload/cstor/cassandra-app-workload-cstor
 
+# JENKINS_CSTOR
+jenkins-cstor-run/load/check:
+  extends: .app_deploy_template
+  script:
+   - ./script/apps/jenkins/deployer/jenkins-app-deploy-cstor  
+
 ## Define job template for func test jobs  
 
 .func_test_template:
@@ -186,6 +192,11 @@ app-replica-scale-{cassandra-cstor}:
   extends: .func_test_template #dependencies: cassandra-cstor
   script:
    - ./script/apps/cassandra/functional/cstor/app-sts-replica-scale
+
+app-upgrade-deployment-{jenkins-cstor}:
+  extends: .func_test_template #dependencies: jenkins-cstor
+  script:
+   - ./script/apps/jenkins/functional/cstor/app-upgrade-deployment
 
 ## Define job template for chaos jobs 
 
