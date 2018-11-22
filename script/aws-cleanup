@@ -16,7 +16,7 @@ mkdir /tmp/aws
 cat aws/cluster/id.csv > /tmp/aws/id.csv
 cat aws/cluster/cluster_name.csv >/tmp/aws/cluster_name.csv
 
-aws_cluster_name=$(cat /tmp/aws/cluster_name.csv); echo ${aws_cluster_name}
+aws_cluster_name=$(cat /tmp/aws/cluster_name.csv | cut -d ":" -f 2); echo ${aws_cluster_name}
 
 # ---- Cloning litmus repository for cleaning AWS cluster and pre-requisite-------#
 git clone https://github.com/openebs/litmus.git
@@ -30,5 +30,5 @@ ansible-playbook delete-pre-requisite.yml -v --extra-vars "region=us-west-1 avai
 
 # ---------------------- Deleting Disks ------------------------------------------#
 cd ../ebs-volumes
-ansible-playbook delete-ebs-volume.yml -vv --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 available_zone=us-west-1a"
+ansible-playbook delete-ebs-volume.yml --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 available_zone=us-west-1a" -vv
 

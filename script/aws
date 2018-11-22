@@ -40,6 +40,6 @@ cp -r ~/.ssh/. /openebs/e2e-aws/aws/ssh
 kubectl create configmap kubeconfig --from-file=/openebs/e2e-aws/aws/.kube/admin.conf -n litmus
 
 # -------------------------- Attach Disks -------------------------------
-aws_cluster_name=$(cat /tmp/aws/cluster_name.csv); echo ${aws_cluster_name}
+aws_cluster_name=$(cat /tmp/aws/cluster_name.csv | cut -d ":" -f 2); echo ${aws_cluster_name}
 cd ../ebs-volumes
-ansible-playbook create-ebs-volume.yml -vv --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 zone=us-west-1a"
+ansible-playbook create-ebs-volume.yml --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 zone=us-west-1a" -vv
