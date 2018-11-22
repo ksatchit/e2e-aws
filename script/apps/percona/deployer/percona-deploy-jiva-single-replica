@@ -31,6 +31,11 @@ sed -i -e 's/value: openebs-standard/value: openebs-standalone/g' \
 -e 's/app: percona-deployment/app: percona-deployment-single-replica/g'	\
 -e 's/value: app-percona-ns/value: percona-single-replica/g' run_test.yml
 
+sed -i '/command:/i \
+          - name: RUN_ID\
+            value: '"$run_id"'\
+' run_test.yml
+
 #################
 ## RUNNER MAIN ##
 #################
