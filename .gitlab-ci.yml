@@ -69,7 +69,7 @@ percona-jiva-single-replica-run/load/check 0:2:
   script:
    - ./script/apps/percona/deployer/percona-deploy-jiva-single-replica
 
-percona-jiva-run/load/check 1:2:
+percona-jiva-single-replica-run/load/check 1:2:
   extends: .app_deploy_template
   before_script:
    - sleep 180
