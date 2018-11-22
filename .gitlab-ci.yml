@@ -63,6 +63,19 @@ percona-jiva-run/load/check 1:2:
   script: 
    - ./script/apps/percona/workload/jiva/percona-app-workload-jiva
 
+## PERCONA-JIVA-SINGLE-REPLICA
+percona-jiva-single-replica-run/load/check 0:2:
+  extends: .app_deploy_template
+  script:
+   - ./script/apps/percona/deployer/percona-deploy-jiva-single-replica
+
+percona-jiva-run/load/check 1:2:
+  extends: .app_deploy_template
+  before_script:
+   - sleep 180
+  script:
+   - ./script/apps/percona/workload/jiva/percona-app-workload-jiva
+
 ## MONGO-JIVA
 mongo-jiva-run/load/check 0:2:
   extends: .app_deploy_template
