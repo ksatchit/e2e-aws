@@ -224,6 +224,11 @@ repl-kill-{percona-jiva}:
   script:
    - ./script/apps/percona/chaos/jiva/volume-replica-failure
 
+single-repl-kill-{percona-jiva-single-replica}:
+  extends: .chaos_test_template #dependencies: percona-jiva
+  script:
+   - ./script/apps/percona/chaos/jiva/single-replica-failure
+
 ctrl-kill-{mongo-jiva}:
   extends: .chaos_test_template #dependencies: mongo-jiva
   script:
