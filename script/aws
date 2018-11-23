@@ -31,6 +31,7 @@ kubectl apply -f rbac.yaml
 # --------------------- Preparing for gitlab artifact ------------------
 cat /tmp/aws/cluster_name.csv >/openebs/e2e-aws/aws/cluster/cluster_name.csv
 cat /tmp/aws/id.csv > /openebs/e2e-aws/aws/cluster/id.csv
+cat /tmp/aws/volume-id > /openebs/e2e-aws/aws/cluster/volume-id
 mkdir /openebs/e2e-aws/aws/.kube
 cat ~/.kube/config > /openebs/e2e-aws/aws/.kube/admin.conf
 cat ~/.kube/config > /openebs/e2e-aws/aws/.kube/config
@@ -43,3 +44,4 @@ kubectl create configmap kubeconfig --from-file=/openebs/e2e-aws/aws/.kube/admin
 aws_cluster_name=$(cat /tmp/aws/cluster_name.csv | cut -d ":" -f 2); echo ${aws_cluster_name}
 cd ../ebs-volumes
 ansible-playbook create-ebs-volume.yml --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 zone=us-west-1a" -vv
+cat /tmp/aws/volume-id
