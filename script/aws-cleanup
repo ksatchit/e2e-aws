@@ -24,7 +24,7 @@ git clone https://github.com/openebs/litmus.git
 cd litmus/k8s/aws/k8s-installer
 
 # ---------------------- Deleting AWS cluster ------------------------------------#
-ansible-playbook delete-aws-cluster.yml -v --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 available_zone=us-west-1a"
+ansible-playbook delete-aws-cluster.yml -v --extra-vars "region=us-west-1 available_zone=us-west-1a"
 
 # ---------------------- Deleting AWS pre-requisite ------------------------------#
 ansible-playbook delete-pre-requisite.yml -v --extra-vars "region=us-west-1 available_zone=us-west-1a" 
