@@ -31,5 +31,5 @@ ansible-playbook delete-pre-requisite.yml -v --extra-vars "region=us-west-1 avai
 
 # ---------------------- Deleting Disks ------------------------------------------#
 cd ../ebs-volumes
-ansible-playbook delete-ebs-volume.yml --extra-vars "cluster_name=${aws_cluster_name} region=us-west-1 available_zone=us-west-1a" -vv
+ansible-playbook delete-ebs-volume.yml --extra-vars "cluster_name=nodes.k8s-${aws_cluster_name}.k8s.local region=us-west-1 available_zone=us-west-1a" 
 
