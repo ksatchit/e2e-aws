@@ -38,7 +38,7 @@ sed -i '/command:/i \
 #################
 
 echo "Running the litmus test.."
-${utils_path}/litmus_job_runner label='name:openebs-volume-replica-failure' job=run_test.yml
+${utils_path}/litmus_job_runner label='name:openebs-volume-replica-failure-single' job=run_test.yml
 ${utils_path}/task_delimiter;
 
 echo "Dumping state of cluster post job run"; echo ""
