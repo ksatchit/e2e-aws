@@ -50,71 +50,25 @@ openebs-aws-deploy:
 
 ## Define the app deployer jobs
 
-## PERCONA-JIVA
+        ## PERCONA-JIVA
 percona-jiva-run/load/check 0:2:
   extends: .app_deploy_template
-  script: 
+  script:
    - ./script/apps/percona/deployer/percona-app-deploy-jiva
 
 percona-jiva-run/load/check 1:2:
   extends: .app_deploy_template
-  before_script: 
+  before_script:
    - sleep 180
-  script: 
+  script:
    - ./script/apps/percona/workload/jiva/percona-app-workload-jiva
-
 ## PERCONA-JIVA-SINGLE-REPLICA
 percona-jiva-single-replica-run/load/check:
   extends: .app_deploy_template
   script:
    - ./script/apps/percona/deployer/percona-deploy-jiva-single-replica
 
-## MONGO-JIVA
-mongo-jiva-run/load/check 0:2:
-  extends: .app_deploy_template
-  script: 
-   - ./script/apps/mongo/deployer/mongo-app-deploy-jiva
-
-mongo-jiva-run/load/check 1:2:
-  extends: .app_deploy_template
-  before_script: 
-   - sleep 180
-  script: 
-   - ./script/apps/mongo/workload/jiva/mongo-app-workload-jiva
-
-# POSTGRES-JIVA
-postgres-jiva-run/load/check 0:2:
-  extends: .app_deploy_template
-  script: 
-   - ./script/apps/postgres/deployer/postgres-app-deploy-jiva
-
-postgres-jiva-run/load/check 1:2:
-  extends: .app_deploy_template
-  before_script: 
-   - sleep 180
-  script: 
-   - ./script/apps/postgres/workload/jiva/postgres-app-workload-jiva
-
-# CASSANDRA-JIVA
-cassandra-jiva-run/load/check 0:2:
-  extends: .app_deploy_template
-  script: 
-   - ./script/apps/cassandra/deployer/cassandra-app-deploy-jiva
-
-cassandra-jiva-run/load/check 1:2:
-  extends: .app_deploy_template
-  before_script: 
-   - sleep 180
-  script: 
-   - ./script/apps/cassandra/workload/jiva/cassandra-app-workload-jiva
-
-# JENKINS-JIVA
-jenkins-jiva-run/load/check:
-  extends: .app_deploy_template
-  script: 
-   - ./script/apps/jenkins/deployer/jenkins-app-deploy-jiva
-
-# PERCONA-CSTOR
+     # PERCONA-CSTOR
 percona-cstor-run/load/check 0:2:
   extends: .app_deploy_template
   script: 
@@ -127,39 +81,6 @@ percona-cstor-run/load/check 1:2:
   script: 
    - ./script/apps/percona/workload/cstor/percona-app-workload-cstor
 
-# MONGO-CSTOR
-mongo-cstor-run/load/check 0:2:
-  extends: .app_deploy_template
-  script: 
-   - ./script/apps/mongo/deployer/mongo-app-deploy-cstor
-
-mongo-cstor-run/load/check 1:2:
-  extends: .app_deploy_template
-  before_script: 
-   - sleep 180
-  script: 
-   - ./script/apps/mongo/workload/cstor/mongo-app-workload-cstor
-
-# CASSANDRA_CSTOR
-cassandra-cstor-run/load/check 0:2:
-  extends: .app_deploy_template
-  script:
-   - ./script/apps/cassandra/deployer/cassandra-app-deploy-cstor
-
-cassandra-cstor-run/load/check 1:2:
-  extends: .app_deploy_template
-  before_script:
-   - sleep 180
-  script:
-   - ./script/apps/cassandra/workload/cstor/cassandra-app-workload-cstor
-
-# JENKINS_CSTOR
-jenkins-cstor-run/load/check:
-  extends: .app_deploy_template
-  script:
-   - ./script/apps/jenkins/deployer/jenkins-app-deploy-cstor  
-
-## Define job template for func test jobs  
 
 .func_test_template:
   image: atulabhi/kops:v8
@@ -169,45 +90,12 @@ jenkins-cstor-run/load/check:
     paths: 
       - aws-openebs/
 
-app-replica-scale-{cassandra-jiva}:
-  extends: .func_test_template #dependencies: cassandra-jiva
-  script:
-   - ./script/apps/cassandra/functional/jiva/app-sts-replica-scale 
-
-app-upgrade-deployment-{jenkins-jiva}:
-  extends: .func_test_template #dependencies: jenkins-jiva
-  script:
-   - ./script/apps/jenkins/functional/jiva/app-upgrade-deployment
-
-volume-data-integrity-{fio-jiva}:
-  extends: .func_test_template 
-  script:
-   - ./script/apps/fio/tests/jiva/fio-volume-data-integrity-check
-
-volume-data-integrity-{fio-cstor}:
-  extends: .func_test_template
-  script:
-   - ./script/apps/fio/tests/cstor/fio-volume-data-integrity-check
-
-volume-memory-consumption-{memcheck-jiva}:
-  extends: .func_test_template
-  script:
-   - ./script/apps/memleak/tests/jiva/memory-consumption
 
 k8s-snapshot-clone-creation-{snapshot-clone-jiva}:
   extends: .func_test_template
   script:
    - ./script/apps/percona/functional/jiva/k8s-snapshot-clone
 
-app-replica-scale-{cassandra-cstor}:
-  extends: .func_test_template #dependencies: cassandra-cstor
-  script:
-   - ./script/apps/cassandra/functional/cstor/app-sts-replica-scale
-
-app-upgrade-deployment-{jenkins-cstor}:
-  extends: .func_test_template #dependencies: jenkins-cstor
-  script:
-   - ./script/apps/jenkins/functional/cstor/app-upgrade-deployment
 
 ## Define job template for chaos jobs 
 
@@ -219,40 +107,12 @@ app-upgrade-deployment-{jenkins-cstor}:
     paths: 
       - aws-openebs/
 
-repl-kill-{percona-jiva}:
-  extends: .chaos_test_template #dependencies: percona-jiva
-  script:
-   - ./script/apps/percona/chaos/jiva/volume-replica-failure
 
 single-repl-kill-{percona-jiva-single-replica}:
   extends: .chaos_test_template #dependencies: percona-jiva
   script:
    - ./script/apps/percona/chaos/jiva/single-replica-failure
 
-ctrl-kill-{mongo-jiva}:
-  extends: .chaos_test_template #dependencies: mongo-jiva
-  script:
-   - ./script/apps/mongo/chaos/jiva/volume-controller-failure
-
-repl-disconnect-{jenkins-jiva}:
-  extends: .chaos_test_template #dependencies: jenkins-jiva
-  script:
-   - ./script/apps/jenkins/chaos/jiva/volume-replica-network-delay
-
-ctrl-disconnect-{postgres-jiva}:
-  extends: .chaos_test_template #dependencies: postgres-jiva
-  script:
-   - ./script/apps/postgres/chaos/jiva/volume-controller-network-delay
-
-tgt-kill-{percona-cstor}:
-  extends: .chaos_test_template #dependencies: percona-cstor
-  script:
-   - ./script/apps/percona/chaos/cstor/volume-target-failure
-
-tgt-disconnect-{mongo-cstor}:
-  extends: .chaos_test_template #dependencies: mongo-cstor
-  script:
-   - ./script/apps/mongo/chaos/cstor/volume-target-network-delay
 
 cleanup-aws:
   when: always
