@@ -26,7 +26,8 @@ cd litmus
 cp apps/percona/functional/k8s_snapshot/run_litmus_test.yml run_test.yml
 
 sed -i -e 's/value: app-percona-ns/value: percona-cstor/g' \
--e 's/app: k8s-snapshot-litmus/app: k8s-snapshot-litmus-cstor/g' run_test.yml
+-e 's/app: k8s-snapshot-litmus/app: k8s-snapshot-litmus-cstor/g' 
+-e 's/value: snap-percona/value: snapshot-cstor/g' run_test.yml
 
 sed -i '/command:/i \
           - name: RUN_ID\
