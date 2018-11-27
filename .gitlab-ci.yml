@@ -96,6 +96,11 @@ k8s-snapshot-clone-creation-{snapshot-clone-jiva}:
   script:
    - ./script/apps/percona/functional/jiva/k8s-snapshot-clone
 
+cstor-k8s-snapshot-clone-creation-{snapshot-clone-cstor}:
+  extends: .func_test_template
+  script:
+   - ./script/apps/percona/functional/cstor/cstor-k8s-snapshot-clone
+
 
 ## Define job template for chaos jobs 
 
