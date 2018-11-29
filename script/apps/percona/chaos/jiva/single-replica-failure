@@ -6,7 +6,7 @@ set -x
 #################
 
 ## https://github.com/openebs/litmus/blob/master/apps/percona/chaos/openebs_volume_replica_failure/test_vars.yml
-run_id="single";test_name=$(${utils_path}/generate_test_name testcase=openebs-volume-replica-failure metadata=${run_id}))
+run_id="single";test_name=$(${utils_path}/generate_test_name testcase=openebs-volume-replica-failure metadata=${run_id})
 
 ###################
 ## DEPENDENCIES  ##
